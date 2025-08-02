@@ -8,8 +8,7 @@ __pycache__/
 # Env variables
 .env
 
-# SQLite database (optional)
-*.sqlite3
+
 
 # VSCode or PyCharm settings
 .vscode/
