@@ -1,0 +1,16 @@
+# Ignore virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Env variables
+.env
+
+# SQLite database (optional)
+*.sqlite3
+
+# VSCode or PyCharm settings
+.vscode/
+.idea/
