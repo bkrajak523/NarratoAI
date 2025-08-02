@@ -1,0 +1,230 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Catalog System</title>
+    <link rel="stylesheet" href="{% static 'catalog/librarys.css' %}">
+
+
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1><span class="highlight">Library</span> Catalog System</h1>
+            </div>
+            <nav>
+                <ul id="nav-links">
+                    <li><button id="home-link">Home</button></li>
+                    <li><button id="login-link">Login</button></li>
+                    <li><button id="register-link">Register</button></li>
+                    <li><button id="logout-link" class="hidden">Logout</button></li>
+                    <li><button id="admin-link" class="hidden">Admin</button></li>
+                    <li><button id="student-link" class="hidden">Student</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="home-content">
+            <h2>Welcome to the Library Catalog System</h2>
+            <p>Please login or register to continue.</p>
+            <img src="https://cache.careers360.mobi/media/presets/860X430/article_images/2019/5/28/Webp.net-resizeimage_8.jpg" alt="Library Image" style="max-width: 100%; height: auto; margin-top: 20px; border-radius: 5px;">
+        </div>
+
+        <!-- Login -->
+        <div id="login-content" class="hidden login-form">
+            <h2>Login</h2>
+            <div class="form-group">
+                <label for="login-email">Email:</label>
+                <input type="email" id="login-email" required>
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" required>
+            </div>
+            <div class="form-group">
+                <label for="login-role">Role:</label>
+                <select id="login-role">
+                    <option value="student">Student</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <button id="login-btn">Login</button>
+            <p id="login-error" class="error"></p>
+        </div>
+
+        <!-- Register -->
+        <div id="register-content" class="hidden registration-form">
+            <h2>Register</h2>
+            <div class="form-group">
+                <label for="reg-name">Name:</label>
+                <input type="text" id="reg-name" required>
+            </div>
+            <div class="form-group">
+                <label for="reg-email">Email:</label>
+                <input type="email" id="reg-email" required>
+            </div>
+            <div class="form-group">
+                <label for="reg-password">Password:</label>
+                <input type="password" id="reg-password" required>
+            </div>
+            <div class="form-group">
+                <label for="reg-student-id">Student ID:</label>
+                <input type="text" id="reg-student-id" required>
+            </div>
+            <button id="register-btn">Register</button>
+            <p id="register-error" class="error"></p>
+            <p id="register-success" class="success"></p>
+        </div>
+
+        <!-- Admin Section -->
+        <div id="admin-content" class="hidden">
+            <div class="tabs">
+                <button class="tablinks active" onclick="openTab(event, 'add-book')">Add Book</button>
+                <button class="tablinks" onclick="openTab(event, 'remove-book')">Remove Book</button>
+                <button class="tablinks" onclick="openTab(event, 'view-books')">View Books</button>
+                <button class="tablinks" onclick="openTab(event, 'view-borrowers')">View Borrowers</button>
+            </div>
+
+            <div id="add-book" class="tabcontent" style="display: block;">
+                <h3>Add New Book</h3>
+                <div class="form-group">
+                    <label for="book-title">Title:</label>
+                    <input type="text" id="book-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="book-author">Author:</label>
+                    <input type="text" id="book-author" required>
+                </div>
+                <div class="form-group">
+                    <label for="book-isbn">ISBN:</label>
+                    <input type="text" id="book-isbn" required>
+                </div>
+                <div class="form-group">
+                    <label for="book-copies">Number of Copies:</label>
+                    <input type="number" id="book-copies" required>
+                </div>
+                <button id="add-book-btn">Add Book</button>
+                <p id="add-book-error" class="error"></p>
+                <p id="add-book-success" class="success"></p>
+            </div>
+
+            <div id="remove-book" class="tabcontent">
+                <h3>Remove Book</h3>
+                <div class="form-group">
+                    <label for="remove-book-id">Book ID:</label>
+                    <input type="text" id="remove-book-id" required>
+                </div>
+                <button id="remove-book-btn">Remove Book</button>
+                <p id="remove-book-error" class="error"></p>
+                <p id="remove-book-success" class="success"></p>
+            </div>
+
+            <div id="view-books" class="tabcontent">
+                <h3>All Books in Library</h3>
+                <table id="books-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>ISBN</th>
+                            <th>Available Copies</th>
+                            <th>Total Copies</th>
+                        </tr>
+                    </thead>
+                    <tbody id="books-table-body"></tbody>
+                </table>
+            </div>
+
+            <div id="view-borrowers" class="tabcontent">
+                <h3>Books Borrowed by Students</h3>
+                <table id="borrowers-table">
+                    <thead>
+                        <tr>
+                            <th>Book ID</th>
+                            <th>Book Title</th>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Borrow Date</th>
+                            <th>Return Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="borrowers-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Student Section -->
+        <div id="student-content" class="hidden">
+            <div class="tabs">
+                <button class="tablinks active" onclick="openTab(event, 'available-books')">Available Books</button>
+                <button class="tablinks" onclick="openTab(event, 'borrowed-books')">Borrowed Books</button>
+                <button class="tablinks" onclick="openTab(event, 'borrow-book')">Borrow Book</button>
+                <button class="tablinks" onclick="openTab(event, 'return-book')">Return Book</button>
+            </div>
+
+            <div id="available-books" class="tabcontent" style="display: block;">
+                <h3>Available Books</h3>
+                <table id="available-books-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>ISBN</th>
+                            <th>Available Copies</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="available-books-table-body"></tbody>
+                </table>
+            </div>
+
+            <div id="borrowed-books" class="tabcontent">
+                <h3>Your Borrowed Books</h3>
+                <table id="borrowed-books-table">
+                    <thead>
+                        <tr>
+                            <th>Book ID</th>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Borrow Date</th>
+                            <th>Return Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="borrowed-books-table-body"></tbody>
+                </table>
+            </div>
+
+            <div id="borrow-book" class="tabcontent">
+                <h3>Borrow a Book</h3>
+                <div class="form-group">
+                    <label for="borrow-book-id">Book ID:</label>
+                    <input type="text" id="borrow-book-id" required>
+                </div>
+                <button id="borrow-book-btn">Borrow Book</button>
+                <p id="borrow-book-error" class="error"></p>
+                <p id="borrow-book-success" class="success"></p>
+            </div>
+
+            <div id="return-book" class="tabcontent">
+                <h3>Return a Book</h3>
+                <div class="form-group">
+                    <label for="return-book-id">Book ID:</label>
+                    <input type="text" id="return-book-id" required>
+                </div>
+                <button id="return-book-btn">Return Book</button>
+                <p id="return-book-error" class="error"></p>
+                <p id="return-book-success" class="success"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'catalog/library.js' %}"></script>
+</body>
+</html>
